@@ -1,23 +1,25 @@
 import { style } from '@vanilla-extract/css'
 
 const styles = {
-    container: style({
+    containar: style({
         width: '75%',
         margin: '50px auto',
     }),
     titleBox: style({
-        textAlign: 'center',
-    }),
-    titleText: style({
         fontSize: '40px',
         fontWeight: 'bold',
-    }),
-    alertBox: style({
-        marginTop: '20px',
-        marginBottom: '20px',
-    }),
-    buttonBox: style({
         textAlign: 'center',
+    }),
+    menuBox: style({
+        marginTop: '20px',
+        textAlign: 'center',
+    }),
+    subTitle: style({
+        fontSize: '30px',
+        fontWeight: 'bold',
+    }),
+    menuList: style({
+        marginTop: '5px',
     }),
 }
 

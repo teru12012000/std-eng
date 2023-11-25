@@ -28,7 +28,7 @@ export default function Home() {
                     {en.home.WarningMessage}
                 </Alert>
             </div>
-            <div>
+            <div className={styles.buttonBox}>
                 <Button onClick={handleClickLogin}>
                     {en.home.loginButton}
                 </Button>
