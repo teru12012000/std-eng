@@ -11,16 +11,18 @@ import { menu } from '@/shared/types/link'
 import Link from 'next/link'
 const MyHomePage = () => {
     const [user] = useAuthState(auth)
+
     if (!user) {
         return (
             <div className={styles.containar}>
                 <Alert status="error">
                     <AlertIcon />
-                    {'Please "login"'}
+                    {en.errorAlert.message}
                 </Alert>
             </div>
         )
     }
+
     return (
         <div className={styles.containar}>
             <div>

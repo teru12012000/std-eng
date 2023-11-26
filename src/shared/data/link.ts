@@ -7,7 +7,7 @@ export const menuLink: menu[] = [
         title: en.myHome.menu1,
     },
     {
-        link: '',
+        link: '/record',
         title: en.myHome.menu2,
     },
 ]

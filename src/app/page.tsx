@@ -12,7 +12,7 @@ export default function Home() {
         signInWithPopup(auth, provider)
             .then((result) => {
                 const uid = result.user.uid
-                router.push(`/home/${uid}`)
+                router.push(`/home`)
             })
             .catch((e) => {})
     }
