@@ -12,6 +12,6 @@ export async function POST(
         await db.collection(uid as string).add(body)
         return NextResponse.json({ message: 'OK' })
     } catch (e) {
-        return NextResponse.json({ message: 'error' })
+        return NextResponse.json({ message: 'ERROR' })
     }
 }
