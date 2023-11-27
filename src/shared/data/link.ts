@@ -3,7 +3,7 @@ import { menu } from '../types/link'
 
 export const menuLink: menu[] = [
     {
-        link: '',
+        link: '/viewList',
         title: en.myHome.menu1,
     },
     {

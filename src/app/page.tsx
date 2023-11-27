@@ -3,18 +3,20 @@ import en from '@/shared/lang/en'
 import { Alert, AlertIcon, Button } from '@chakra-ui/react'
 import styles from './style.css'
 import { useRouter } from 'next/navigation'
+import firebase from 'firebase/compat/app'
 import { signInWithPopup } from 'firebase/auth'
 import { auth, provider } from '@/lib/firebase/firebase'
 
 export default function Home() {
     const router = useRouter()
-    const handleClickLogin = () => {
-        signInWithPopup(auth, provider)
-            .then((result) => {
-                const uid = result.user.uid
-                router.push(`/home`)
-            })
-            .catch((e) => {})
+    const handleClickLogin = async () => {
+        try {
+            await signInWithPopup(auth, provider).then(() =>
+                router.push('/home')
+            )
+        } catch (error) {
+            console.error(error)
+        }
     }
     return (
         <main className={styles.container}>

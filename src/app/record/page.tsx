@@ -1,6 +1,9 @@
 'use client'
 
-import { validationRecordType } from '@/shared/types/record'
+import type {
+    sendRecordType,
+    validationRecordType,
+} from '@/shared/types/record'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { recordValidation } from '@/util/validation'
@@ -22,20 +25,17 @@ import {
 import { recordRadio } from '@/shared/data/radio'
 import { recordRadioType } from '@/shared/types/radio'
 import { useState } from 'react'
-import { useAuthState } from 'react-firebase-hooks/auth'
-import { auth, db } from '@/lib/firebase/firebase'
-import {
-    addDoc,
-    collection,
-    doc,
-    getFirestore,
-    setDoc,
-} from 'firebase/firestore'
+import { auth } from '@/lib/firebase/firebase'
 import { useRouter } from 'next/navigation'
+import { postData } from '@/util/postApi'
+import { mutate, useSWRConfig } from 'swr'
+import { useAuthState } from 'react-firebase-hooks/auth'
 
 const Record = () => {
     const router = useRouter()
+    //const user = auth.currentUser
     const [user] = useAuthState(auth)
+    const id = user?.uid
     const [kind, setKind] = useState<string>('word')
 
     const {
@@ -46,19 +46,19 @@ const Record = () => {
         resolver: yupResolver(recordValidation),
     })
 
+    useSWRConfig()
+
     const onSubmit = async (data: validationRecordType) => {
-        const postData = collection(db, user?.uid as string)
-        console.log(data)
-        try {
-            console.log('start')
-            await addDoc(postData, {
-                eng: data.eng,
-                ja: data.ja,
-                kind: kind,
-            }).then((res) => router.push('/viewList'))
-        } catch (e) {
-            console.log('error')
+        const newData: sendRecordType = {
+            eng: data.eng,
+            ja: data.ja,
+            kind: kind,
         }
+
+        await postData(id as string, newData).then(() => {
+            mutate(`/api/get/${id}`)
+            router.push('/viewList')
+        })
     }
 
     if (!user) {
